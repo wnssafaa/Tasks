@@ -1,0 +1,117 @@
+/* Style général du formulaire */
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles des titres et labels */
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  /* Espacement et style des champs de saisie */
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  /* Focus sur les champs de saisie */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Texte d'espace réservé (placeholder) */
+  input::placeholder,
+  textarea::placeholder {
+    color: #aaa;
+  }
+  
+  /* Style du bouton de soumission */
+  button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Changement de couleur au survol */
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Désactivation du bouton */
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Style du bouton réinitialiser */
+  button[type="button"] {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Changement de couleur au survol du bouton réinitialiser */
+  button[type="button"]:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Styles de l'espacement entre les éléments */
+  div {
+    margin-bottom: 20px;
+  }
+  
+  /* Style des zones de texte (textarea) */
+  textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  /* Responsive - Formulaire sur petit écran */
+  @media (max-width: 768px) {
+    form {
+      padding: 15px;
+    }
+  
+    label {
+      font-size: 1rem;
+    }
+  
+    input,
+    textarea,
+    select {
+      font-size: 1rem;
+    }
+  
+    button {
+      font-size: 1rem;
+    }
+  }
+  
