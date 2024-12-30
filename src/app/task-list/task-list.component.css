@@ -1,0 +1,34 @@
+.task-list-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  mat-table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  mat-header-cell {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  mat-cell, mat-header-cell {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  button {
+    margin: 0 5px;
+  }
+  

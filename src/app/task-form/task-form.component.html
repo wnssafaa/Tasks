@@ -10,15 +10,7 @@
       />
     </div>
   
-    <div>
-      <label for="description">Description :</label>
-      <textarea
-        id="description"
-        name="description"
-        [(ngModel)]="task.description"
-        placeholder="Entrez la description de la tâche"
-      ></textarea>
-    </div>
+ 
   
     <div>
       <label for="status">Statut :</label>
@@ -101,5 +93,8 @@
   
     <button type="submit" [disabled]="!taskForm.form.valid">Enregistrer</button>
     <button type="button" (click)="resetForm()">Réinitialiser</button>
+    <button type="button" mat-raised-button color="primary" [routerLink]="'/task-list'">
+        Aller à la liste des tâches
+      </button>
   </form>
   

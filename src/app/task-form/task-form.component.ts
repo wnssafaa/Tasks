@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../task.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-form',
   imports: [
-    FormsModule,
+    FormsModule,RouterModule,
     HttpClientModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css'
