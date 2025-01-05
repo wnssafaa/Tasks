@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-task-list',
   imports: [CommonModule, MatTableModule,MatButtonModule,RouterModule],
@@ -24,7 +24,7 @@ export class TaskListComponent  implements OnInit{
   tasks: any[] = [];
   errorMessage: string = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService,private router: Router) {}
 
   ngOnInit(): void {
     this.getTasks();
@@ -56,5 +56,7 @@ export class TaskListComponent  implements OnInit{
     }
   }
   
-
+  editTask(taskId: number): void {
+    this.router.navigate(['/first', taskId]);
+  }
 }

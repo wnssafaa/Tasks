@@ -5,7 +5,7 @@
   }
   /* Styling for the toolbar */
 .mat-toolbar {
-    background-color: #3b82f6; /* Blue background */
+    background-color: #854ade; /* Blue background */
     color: white; /* White text color */
     display: flex;
     align-items: center;
@@ -48,10 +48,16 @@
   }
   
   .mat-raised-button {
-    background-color: #3b82f6; /* Blue buttons */
+    background-color: #854ade; /* Blue buttons */
     color: white;
   }
   
 .mat-raised-button:hover {
-    background-color: #2563eb; /* Darker blue on hover */
+    background-color: #854ade; /* Darker blue on hover */
+}
+a{
+  color: #854ade;
+}
+span{
+  color: black;
 }

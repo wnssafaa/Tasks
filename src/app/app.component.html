@@ -1,32 +1,36 @@
-<mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
-  <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
-      @if (showFiller) {
-        <p>Lorem, ipsum dolor sit amet consectetur.</p>
-      }
-      <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button>
-    </mat-drawer>
+<mat-toolbar color="Primary ">
+  <!-- Bouton pour ouvrir le menu latéral -->
+  <button
+    mat-icon-button
+    aria-label="Toggle sidenav"
+    (click)="drawer.toggle()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
   
-    <div class="example-sidenav-content">
-        <router-outlet></router-outlet>
-      </div>
+  <span>Planify</span>
+  
+  
+</mat-toolbar>
+
+<mat-drawer-container class="example-container" autosize>
+  <!-- Menu latéral -->
+  <mat-drawer #drawer class="example-sidenav" mode="side"  [opened]="true">
+    <mat-list-item>
+      <a mat-button routerLink="/first" routerLinkActive="active">
+        <mat-icon>add</mat-icon> Ajouter une tâche
+      </a>
+      <a mat-button routerLink="/list" routerLinkActive="active">
+        <mat-icon>list</mat-icon>
+        Liste des tâches
+      </a>
       
+    </mat-list-item>
     
   
-  </mat-drawer-container>
-  
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

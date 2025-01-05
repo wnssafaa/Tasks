@@ -1,100 +1,86 @@
-<form (ngSubmit)="saveTask()" #taskForm="ngForm">
-    <div>
-      <label for="title">Titre :</label>
-      <input
-        id="title"
-        name="title"
-        [(ngModel)]="task.title"
-        required
-        placeholder="Entrez le titre de la tâche"
-      />
+<div class="task-form-card">
+  <h1 *ngIf="!isEditMode">Ajouter une Tâche</h1>
+  <h1 *ngIf="isEditMode">Modifier une Tâche</h1>
+  <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+    <!-- Ligne 1 : Titre et Statut -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" >
+        <mat-label>Titre</mat-label>
+        <input matInput placeholder="Titre de la tâche" formControlName="title" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Statut</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="À faire">À faire</mat-option>
+          <mat-option value="En cours">En cours</mat-option>
+          <mat-option value="Terminé">Terminé</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-  
- 
-  
-    <div>
-      <label for="status">Statut :</label>
-      <select id="status" name="status" [(ngModel)]="task.status">
-        <option value="À faire">À faire</option>
-        <option value="En cours">En cours</option>
-        <option value="Terminé">Terminé</option>
-      </select>
+
+    <!-- Ligne 2 : Priorité et Date d'échéance -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Priorité</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="Haute">Haute</mat-option>
+          <mat-option value="Moyenne">Moyenne</mat-option>
+          <mat-option value="Basse">Basse</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Date d'échéance</mat-label>
+        <input matInput type="date" formControlName="due_date" />
+      </mat-form-field>
     </div>
-  
-    <div>
-      <label for="priority">Priorité :</label>
-      <input
-        id="priority"
-        name="priority"
-        [(ngModel)]="task.priority"
-        placeholder="Entrez la priorité"
-      />
+
+    <!-- Ligne 3 : Temps estimé et Catégorie -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Temps estimé (heures)</mat-label>
+        <input matInput type="number" placeholder="Temps estimé" formControlName="estimated_time" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Catégorie</mat-label>
+        <input matInput placeholder="Catégorie" formControlName="category" />
+      </mat-form-field>
     </div>
-  
-    <div>
-      <label for="due_date">Date Limite :</label>
-      <input
-        type="date"
-        id="due_date"
-        name="due_date"
-        [(ngModel)]="task.due_date"
-      />
+
+    <!-- Ligne 4 : Assigné à et Tags -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Assigné à</mat-label>
+        <input matInput placeholder="Nom de la personne assignée" formControlName="assigned_to" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tags</mat-label>
+        <input matInput placeholder="Tags, séparés par des virgules" formControlName="tags" />
+      </mat-form-field>
     </div>
-  
-    <div>
-      <label for="estimated_time">Temps Estimé :</label>
-      <input
-        id="estimated_time"
-        name="estimated_time"
-        [(ngModel)]="task.estimated_time"
-        placeholder="Entrez le temps estimé"
-      />
-    </div>
-  
-    <div>
-      <label for="category">Catégorie :</label>
-      <input
-        id="category"
-        name="category"
-        [(ngModel)]="task.category"
-        placeholder="Entrez la catégorie"
-      />
-    </div>
-  
-    <div>
-      <label for="assigned_to">Assigné à :</label>
-      <input
-        id="assigned_to"
-        name="assigned_to"
-        [(ngModel)]="task.assigned_to"
-        placeholder="Entrez le nom de la personne assignée"
-      />
-    </div>
-  
-    <div>
-      <label for="tags">Tags :</label>
-      <input
-        id="tags"
-        name="tags"
-        [(ngModel)]="task.tags"
-        placeholder="Entrez des tags séparés par des virgules"
-      />
-    </div>
-  
-    <div>
-      <label for="comments">Commentaires :</label>
-      <textarea
-        id="comments"
-        name="comments"
-        [(ngModel)]="task.comments"
-        placeholder="Entrez des commentaires"
-      ></textarea>
-    </div>
-  
-    <button type="submit" [disabled]="!taskForm.form.valid">Enregistrer</button>
-    <button type="button" (click)="resetForm()">Réinitialiser</button>
-    <button type="button" mat-raised-button color="primary" [routerLink]="'/task-list'">
-        Aller à la liste des tâches
+
+    <!-- Ligne 5 : Description -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Description de la tâche" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <!-- Ligne 6 : Commentaires -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Commentaires</mat-label>
+      <textarea matInput placeholder="Commentaires" formControlName="comments"></textarea>
+    </mat-form-field>
+
+    <!-- Boutons -->
+    <div class="button-group">
+      <button mat-raised-button color="primary" [disabled]="taskForm.invalid" *ngIf="!isEditMode" >
+        Enregistrer
       </button>
+      <button mat-raised-button color="primary" [disabled]="taskForm.invalid" *ngIf="isEditMode">
+        Modifier
+      </button>
+      <button mat-raised-button color="primary" routerLink="/list">
+        Annuler
+      </button>
+    </div>
   </form>
-  
+</div>

@@ -19,7 +19,7 @@
   
   mat-header-cell {
     background-color: #007bff;
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight: bold;
   }
   

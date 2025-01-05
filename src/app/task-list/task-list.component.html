@@ -1,4 +1,4 @@
-<p>task-list works!</p>
+
     <h2>Liste des Tâches</h2>
   
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
@@ -40,6 +40,9 @@
         <mat-cell *matCellDef="let task">
           <button mat-raised-button color="warn" (click)="deleteTask(task.id)">
             Supprimer
+          </button>
+          <button mat-raised-button color="primary" (click)="editTask(task.id)">
+            Modifier
           </button>
         </mat-cell>
       </ng-container>

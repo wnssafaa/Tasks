@@ -1,0 +1,9 @@
+<h1  mat-dialog-title>{{ data.title || 'Confirmation' }}</h1>
+
+<mat-dialog-content>
+  <p>{{ data.message || 'Opération effectuée avec succès !' }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="closeDialog()">Fermer</button>
+</mat-dialog-actions>
