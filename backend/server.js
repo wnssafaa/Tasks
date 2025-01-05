@@ -99,6 +99,22 @@ app.put('/tasks/:id', (req, res) => {
     }
   );
 });
+// Récupérer une tâche par ID
+app.get('/tasks/:id', (req, res) => {
+  const taskId = req.params.id;
+
+  db.get(`SELECT * FROM tasks WHERE id = ?`, [taskId], (err, row) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    if (!row) {
+      res.status(404).json({ error: 'Tâche non trouvée' });
+      return;
+    }
+    res.json(row);
+  });
+});
 
 // Supprimer une tâche
 app.delete('/tasks/:id', (req, res) => {
