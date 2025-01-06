@@ -14,20 +14,22 @@ app.post('/tasks', (req, res) => {
   const {
     title,
     description,
-    status = 'À faire',  // Par défaut 'À faire'
-    priority = 'Moyenne', // Par défaut 'Moyenne'
-    due_date = null, 
+    status = 'À faire',
+    priority = 'Moyenne',
+    due_date = null,
     estimated_time = null,
     category = null,
     assigned_to = null,
     tags = null,
-    comments = null
+    comments = null,
+    start_date = null, // Nouvelle colonne
+    end_date = null // Nouvelle colonne
   } = req.body;
 
   db.run(
-    `INSERT INTO tasks (title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments],
+    `INSERT INTO tasks (title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments, start_date, end_date)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments, start_date, end_date],
     function (err) {
       if (err) {
         res.status(400).json({ error: err.message });
@@ -44,7 +46,9 @@ app.post('/tasks', (req, res) => {
         category,
         assigned_to,
         tags,
-        comments
+        comments,
+        start_date,
+        end_date
       });
     }
   );
@@ -61,6 +65,23 @@ app.get('/tasks', (req, res) => {
   });
 });
 
+// Récupérer une tâche par ID
+app.get('/tasks/:id', (req, res) => {
+  const taskId = req.params.id;
+
+  db.get('SELECT * FROM tasks WHERE id = ?', [taskId], (err, row) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    if (!row) {
+      res.status(404).json({ error: 'Tâche non trouvée' });
+      return;
+    }
+    res.json(row);
+  });
+});
+
 // Mettre à jour une tâche
 app.put('/tasks/:id', (req, res) => {
   const {
@@ -73,7 +94,9 @@ app.put('/tasks/:id', (req, res) => {
     category,
     assigned_to,
     tags,
-    comments
+    comments,
+    start_date,
+    end_date
   } = req.body;
 
   db.run(
@@ -87,9 +110,11 @@ app.put('/tasks/:id', (req, res) => {
       category = ?,
       assigned_to = ?,
       tags = ?,
-      comments = ?
+      comments = ?,
+      start_date = ?, 
+      end_date = ?
     WHERE id = ?`,
-    [title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments, req.params.id],
+    [title, description, status, priority, due_date, estimated_time, category, assigned_to, tags, comments, start_date, end_date, req.params.id],
     function (err) {
       if (err) {
         res.status(400).json({ error: err.message });
@@ -99,26 +124,10 @@ app.put('/tasks/:id', (req, res) => {
     }
   );
 });
-// Récupérer une tâche par ID
-app.get('/tasks/:id', (req, res) => {
-  const taskId = req.params.id;
-
-  db.get(`SELECT * FROM tasks WHERE id = ?`, [taskId], (err, row) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    if (!row) {
-      res.status(404).json({ error: 'Tâche non trouvée' });
-      return;
-    }
-    res.json(row);
-  });
-});
 
 // Supprimer une tâche
 app.delete('/tasks/:id', (req, res) => {
-  db.run(`DELETE FROM tasks WHERE id = ?`, req.params.id, function (err) {
+  db.run('DELETE FROM tasks WHERE id = ?', req.params.id, function (err) {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
@@ -126,7 +135,39 @@ app.delete('/tasks/:id', (req, res) => {
     res.json({ deleted: this.changes });
   });
 });
+app.patch('/tasks/:id/status', (req, res) => {
+  const { status } = req.body;
+  const taskId = req.params.id;
 
+  db.run(
+    `UPDATE tasks SET status = ? WHERE id = ?`,
+    [status, taskId],
+    function (err) {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.json({ updated: this.changes });
+    }
+  );
+});
+app.patch('/tasks/:id/priority', (req, res) => {
+  const { priority } = req.body;
+  const taskId = req.params.id;
+
+  db.run(
+    `UPDATE tasks SET priority = ? WHERE id = ?`,
+    [priority, taskId],
+    function (err) {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.json({ updated: this.changes });
+    }
+  );
+});
+// Lancer le serveur
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });

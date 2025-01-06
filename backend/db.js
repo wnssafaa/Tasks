@@ -25,7 +25,9 @@ db.serialize(() => {
       category TEXT,
       assigned_to TEXT,
       tags TEXT,
-      comments TEXT
+      comments TEXT,
+       start_date DATETIME, -- Nouvelle colonne pour la date de début
+    end_date DATETIME    -- Nouvelle colonne pour la date de fin;
     )
   `);
 });
