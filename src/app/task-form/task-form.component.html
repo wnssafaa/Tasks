@@ -33,6 +33,17 @@
         <input matInput type="date" formControlName="due_date" />
       </mat-form-field>
     </div>
+<!-- Ligne 6 : Date de début et Date de fin -->
+<div class="form-row">
+  <mat-form-field appearance="outline">
+    <mat-label>Date de début</mat-label>
+    <input matInput type="date" formControlName="start_date" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Date de fin</mat-label>
+    <input matInput type="date" formControlName="end_date" />
+  </mat-form-field>
+</div>
 
     <!-- Ligne 3 : Temps estimé et Catégorie -->
     <div class="form-row">
@@ -42,8 +53,15 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Catégorie</mat-label>
-        <input matInput placeholder="Catégorie" formControlName="category" />
+        <mat-select formControlName="category">
+          <mat-option value="Développement">Développement</mat-option>
+          <mat-option value="Design">Design</mat-option>
+          <mat-option value="Bug Fix">Bug Fix</mat-option>
+          <mat-option value="Documentation">Documentation</mat-option>
+          <mat-option value="Présentation">Présentation</mat-option>
+        </mat-select>
       </mat-form-field>
+      
     </div>
 
     <!-- Ligne 4 : Assigné à et Tags -->

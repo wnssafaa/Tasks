@@ -1,56 +1,120 @@
+<h2>Liste des Tâches</h2>
+<div style="display: flex; ">
+  <input
+    id="search"
+    type="text"
+    placeholder="Rechercher une tâche"
+    style="
+      width: 60%; 
+      height: 50px; 
+      padding: 0 1.5rem; 
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      font-size: 1rem; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s ease;
+    "
+    (keyup)="applyFilter($event)"
+  />
+</div>
 
-    <h2>Liste des Tâches</h2>
-  
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  
-    <mat-table [dataSource]="tasks" class="mat-elevation-z8">
-      <!-- Colonne Titre -->
-      <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef> Titre </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.title }} </mat-cell>
-      </ng-container>
-  
-      <!-- Colonne Description -->
-      <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
-      </ng-container>
-  
-      <!-- Colonne Statut -->
-      <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Statut </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.status }} </mat-cell>
-      </ng-container>
-  
-      <!-- Colonne Priorité -->
-      <ng-container matColumnDef="priority">
-        <mat-header-cell *matHeaderCellDef> Priorité </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.priority }} </mat-cell>
-      </ng-container>
-  
-      <!-- Colonne Date Limite -->
-      <ng-container matColumnDef="due_date">
-        <mat-header-cell *matHeaderCellDef> Date Limite </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.due_date | date: 'dd/MM/yyyy' }} </mat-cell>
-      </ng-container>
-  
-      <!-- Colonne Actions -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-        <mat-cell *matCellDef="let task">
-          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">
-            Supprimer
-          </button>
-          <button mat-raised-button color="primary" (click)="editTask(task.id)">
-            Modifier
-          </button>
-        </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-  
-    <p *ngIf="tasks.length === 0">Aucune tâche trouvée.</p>
+<!-- Conteneur de la liste des tâches -->
 
-  
+
+
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Colonne ID -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>info</mat-icon> ID
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.id }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Titre -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef>
+        Titre
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.title }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Statut -->
+    <ng-container matColumnDef="status" >
+      <mat-header-cell *matHeaderCellDef >
+        <mat-icon>check_circle</mat-icon> Statut
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <mat-select [(value)]="task.status" (selectionChange)="updateStatus(task.id, task.status)"style="align-items: left;text-align: left;">
+          <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Colonne Priorité -->
+    <ng-container matColumnDef="priority">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>priority_high</mat-icon> Priorité
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <mat-select [(value)]="task.priority" (selectionChange)="updatePriority(task.id, task.priority)" style="align-items: left;text-align: left;">
+          <mat-option *ngFor="let priority of priorityOptions" [value]="priority">{{ priority }}</mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Colonne Date Limite -->
+    <ng-container matColumnDef="due_date">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>calendar_today</mat-icon> Date Limite
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.due_date | date: 'dd/MM/yyyy' }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Description -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>description</mat-icon> Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Assignée à -->
+    <ng-container matColumnDef="assigned_to">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>person</mat-icon> Assignée à
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.assigned_to }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Tags -->
+    <ng-container matColumnDef="tags">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>label</mat-icon> Tags
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">{{ task.tags }}</mat-cell>
+    </ng-container>
+
+
+
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>settings</mat-icon> Actions
+      </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="editTask(task.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+

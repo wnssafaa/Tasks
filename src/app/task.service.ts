@@ -32,5 +32,15 @@ export class TaskService {
   getTaskById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
-  
+  updateTaskStatus(taskId: string, status: string): Observable<any> {
+    const body = { status };  // Envoyer uniquement le statut mis à jour
+    return this.http.patch(`${this.apiUrl}/${taskId}/status`, body);
+  }
+
+  // Mettre à jour la priorité d'une tâche
+  updateTaskPriority(taskId: string, priority: string): Observable<any> {
+    const body = { priority };  // Envoyer uniquement la priorité mise à jour
+    return this.http.patch(`${this.apiUrl}/${taskId}/priority`, body);
+  }
+
 }

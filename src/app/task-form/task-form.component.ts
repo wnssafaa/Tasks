@@ -16,6 +16,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DialgosucssComponent } from '../dialgosucss/dialgosucss.component';
+import { DialogmodifierComponent } from '../dialogmodifier/dialogmodifier.component';
 @Component({
   selector: 'app-task-form',
   imports: [
@@ -37,18 +38,21 @@ export class TaskFormComponent {
 
   constructor(private fb: FormBuilder, private taskService: TaskService,
     private router: Router, private route: ActivatedRoute,public dialog: MatDialog) {
-    this.taskForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', Validators.required],
-      status: ['À faire', Validators.required],
-      priority: ['', Validators.required],
-      due_date: ['', Validators.required],
-      estimated_time: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      category: ['', Validators.required],
-      assigned_to: ['', Validators.required],
-      tags: [''],
-      comments: [''],
-    });
+      this.taskForm = this.fb.group({
+        title: ['', [Validators.required, Validators.minLength(3)]],
+        description: ['', Validators.required],
+        status: ['À faire', Validators.required],
+        priority: ['', Validators.required],
+        due_date: ['', Validators.required],
+        estimated_time: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+        category: ['', Validators.required],
+        assigned_to: ['', Validators.required],
+        tags: [''],
+        comments: [''],
+        start_date: ['', Validators.required],  // Nouveau champ
+        end_date: ['', Validators.required],    // Nouveau champ
+      });
+      
   }
   ngOnInit(): void {
     
@@ -65,7 +69,7 @@ export class TaskFormComponent {
   loadTaskDetails(taskId: string): void {
     this.taskService.getTaskById(taskId).subscribe(
       (task) => {
-        console.log('Données reçues depuis l\'API:', task); // Vérifiez les données reçues
+        console.log('Données reçues depuis l\'API:', task);
         if (task) {
           this.taskForm.patchValue({
             title: task.title || '',
@@ -78,9 +82,9 @@ export class TaskFormComponent {
             assigned_to: task.assigned_to || '',
             tags: task.tags || '',
             comments: task.comments || '',
+            start_date: task.start_date || '',  // Remplir le champ start_date
+            end_date: task.end_date || '',      // Remplir le champ end_date
           });
-  
-          // Ajoutez le log ici pour voir les valeurs actuelles du formulaire
           console.log('Valeurs du formulaire après le patch:', this.taskForm.value);
         }
       },
@@ -89,6 +93,7 @@ export class TaskFormComponent {
       }
     );
   }
+  
   
   
   saveTask(): void {
@@ -100,7 +105,7 @@ export class TaskFormComponent {
         this.taskService.updateTask(this.taskId, taskData).subscribe(
           (response) => {
             console.log('Tâche mise à jour avec succès!', response);
-            this.openDialog(); // Afficher la boîte de dialogue
+            this.oeditDialog(); // Afficher la boîte de dialogue
             this.router.navigate(['/list']); // Redirection vers la liste des tâches
           },
           (error) => {
@@ -130,6 +135,15 @@ export class TaskFormComponent {
       data: {
         title: 'Ajout réussi',
         message: 'Votre tâche a été ajoutée avec succès !'
+      },
+      width: '400px', // Vous pouvez ajuster la largeur selon vos besoins
+    });
+  }
+  oeditDialog(): void {
+    this.dialog.open(DialogmodifierComponent, {
+      data: {
+        title: 'modification  réussi',
+        message: 'Votre tâche a été modifier avec succès !'
       },
       width: '400px', // Vous pouvez ajuster la largeur selon vos besoins
     });

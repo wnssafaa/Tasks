@@ -1,34 +1,191 @@
+/* Conteneur de la liste des tâches */
 .task-list-container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  mat-table {
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  mat-header-cell {
-    background-color: #007bff;
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-  }
-  
-  mat-cell, mat-header-cell {
-    padding: 12px;
-    text-align: left;
-  }
-  
-  button {
-    margin: 0 5px;
-  }
-  
+  background-color: #ffffff; /* Fond blanc pour une présentation propre */
+  border-radius: 15px; /* Bordure plus arrondie pour un look plus doux */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombre plus marquée pour un effet de profondeur */
+  padding: 30px; /* Espacement interne pour rendre l'interface aérée */
+  margin: 30px auto; /* Centrer le conteneur avec une marge suffisante */
+  width: 85%; /* Largeur légèrement réduite pour un meilleur espacement */
+  max-width: 1400px; /* Limiter la largeur maximale */
+  background: linear-gradient(to bottom right, #f7f7f7, #ffffff); /* Fond dégradé subtile */
+}
+
+/* Titre */
+h2 {
+  text-align: center;
+  color: #333; /* Couleur sombre pour un contraste élégant */
+  font-size: 2rem; /* Taille de police plus grande pour une hiérarchie claire */
+  font-weight: 600;
+  margin-bottom: 30px; /* Espacement sous le titre */
+  font-family: 'Roboto', sans-serif; /* Police moderne et lisible */
+}
+
+/* Tableau */
+mat-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+/* En-tête de la table */
+mat-header-cell {
+  color: #333; /* Texte sombre pour l'en-tête */
+  font-weight: 700; /* Mettre en avant l'en-tête */
+  background-color: #007bff; /* Fond bleu pour les en-têtes */
+  padding: 14px 20px;
+  text-transform: uppercase; /* Mettre en majuscules pour plus de lisibilité */
+  border-bottom: 3px solid #0056b3; /* Bordure bleu foncé pour délimiter les colonnes */
+  font-size: 1rem;
+  text-align: center; /* Centrer le texte des en-têtes */
+  transition: background-color 0.3s ease; /* Transition douce pour un survol plus interactif */
+}
+
+mat-header-cell:hover {
+  background-color: #0056b3; /* Changer la couleur au survol pour un effet interactif */
+}
+
+/* Cellules de la table */
+mat-cell {
+  padding: 12px 20px;
+  font-size: 1rem; /* Taille de police confortable */
+  color: #555; /* Texte plus clair pour une bonne lisibilité */
+  border-bottom: 1px solid #f0f0f0; /* Ligne discrète sous les cellules */
+  text-align: center;
+  transition: background-color 0.3s ease; /* Ajouter une transition pour l'effet de survol */
+}
+
+mat-row:hover mat-cell {
+  background-color: #f1f1f1; /* Fond léger lors du survol de la ligne */
+}
+
+/* Boutons */
+button {
+  margin: 0 8px;
+  padding: 10px 16px;
+  border-radius: 12px; /* Bordures arrondies pour un effet moderne */
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animation pour les effets de survol */
+}
+
+button:hover {
+  background-color: #0056b3; /* Bleu pour les actions au survol */
+  color: white;
+  transform: scale(1.05); /* Légère augmentation de la taille au survol */
+}
+
+/* Bouton de suppression */
+button[mat-icon-button].warn {
+  background-color: #ff6347; /* Couleur rouge tomate pour la suppression */
+  color: white;
+}
+
+button[mat-icon-button].warn:hover {
+  background-color: #e60000; /* Change à un rouge plus foncé au survol */
+}
+
+/* Bouton d'édition */
+button[mat-icon-button].primary {
+  background-color: #4caf50; /* Vert pour l'édition */
+  color: white;
+}
+
+button[mat-icon-button].primary:hover {
+  background-color: #388e3c; /* Vert plus sombre au survol */
+}
+
+/* Mat-select - Sélecteurs déroulants */
+mat-select {
+  width: 100%;
+  min-width: 170px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 5px;
+  font-size: 1rem;
+}
+
+mat-option {
+  font-size: 1rem; /* Taille homogène des options */
+}
+
+/* Paginator */
+mat-paginator {
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center; /* Centrer le paginator */
+  font-size: 1rem;
+}
+
+mat-paginator .mat-paginator-range-label {
+  font-size: 1.1rem;
+}
+
+mat-paginator button {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+mat-paginator button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+/* Style général pour les icônes dans les en-têtes */
+mat-header-cell mat-icon {
+  font-size: 20px; /* Taille de l'icône */
+  margin-right: 8px; /* Espacement entre l'icône et le texte */
+  color: #5c258d; /* Couleur de l'icône (vert pour un look plus moderne) */
+  transition: color 0.3s ease, transform 0.3s ease; /* Animation lors du survol */
+}
+
+/* Effet lors du survol de l'icône */
+mat-header-cell mat-icon:hover {
+  color: #5c258d; /* Changer la couleur lors du survol */
+  transform: scale(1.2); /* Agrandir l'icône lors du survol */
+}
+
+/* Ajouter un fond léger aux icônes dans les cellules de tableau */
+mat-cell mat-icon {
+  font-size: 18px;
+  color: #004d40;
+  transition: color 0.3s ease;
+}
+
+/* Changer la couleur de l'icône au survol des cellules */
+mat-cell mat-icon:hover {
+  color: #5c258d;
+  transform: scale(1.1);
+}
+
+/* Ajouter un effet de "brillance" aux icônes dans les cellules lors du survol */
+mat-cell mat-icon:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Ombre légère autour de l'icône */
+}
+
+/* Style pour les boutons d'action */
+button.mat-icon-button {
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.mat-icon-button:hover {
+  background-color: #e0f7fa; /* Fond léger lors du survol */
+  transform: scale(1.1); /* Agrandir légèrement le bouton lors du survol */
+}
+
+/* Icône dans les boutons d'action */
+button.mat-icon-button mat-icon {
+  font-size: 22px; /* Taille légèrement plus grande pour les icônes d'action */
+  color: #5c258d; /* Couleur initiale */
+}
+
+/* Changer la couleur de l'icône dans le bouton d'action lors du survol */
+button.mat-icon-button:hover mat-icon {
+  color: #5c258d;
+}
