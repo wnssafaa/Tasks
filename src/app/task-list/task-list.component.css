@@ -25,6 +25,7 @@ mat-table {
   width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
+  background-color: transparent;
 }
 
 /* En-tête de la table */
@@ -36,7 +37,7 @@ mat-header-cell {
   text-transform: uppercase; /* Mettre en majuscules pour plus de lisibilité */
   border-bottom: 3px solid #0056b3; /* Bordure bleu foncé pour délimiter les colonnes */
   font-size: 1rem;
-  text-align: center; /* Centrer le texte des en-têtes */
+  text-align:left; /* Centrer le texte des en-têtes */
   transition: background-color 0.3s ease; /* Transition douce pour un survol plus interactif */
 }
 
@@ -50,7 +51,7 @@ mat-cell {
   font-size: 1rem; /* Taille de police confortable */
   color: #555; /* Texte plus clair pour une bonne lisibilité */
   border-bottom: 1px solid #f0f0f0; /* Ligne discrète sous les cellules */
-  text-align: center;
+  text-align:left;
   transition: background-color 0.3s ease; /* Ajouter une transition pour l'effet de survol */
 }
 
@@ -97,8 +98,9 @@ button[mat-icon-button].primary:hover {
 /* Mat-select - Sélecteurs déroulants */
 mat-select {
   width: 100%;
-  min-width: 170px;
-  background-color: #f7f7f7;
+  
+  border: #555 solid 1px;
+  background-color:transparent;
   border-radius: 8px;
   padding: 8px 12px;
   margin-top: 5px;
@@ -111,7 +113,7 @@ mat-option {
 
 /* Paginator */
 mat-paginator {
-  background-color: #f7f7f7;
+  background-color: transparent;
   border-radius: 12px;
   padding: 12px;
   margin-top: 30px;
@@ -151,14 +153,14 @@ mat-header-cell mat-icon:hover {
 
 /* Ajouter un fond léger aux icônes dans les cellules de tableau */
 mat-cell mat-icon {
-  font-size: 18px;
-  color: #004d40;
+  font-size:25px;
+  color: #252085;
   transition: color 0.3s ease;
 }
 
 /* Changer la couleur de l'icône au survol des cellules */
 mat-cell mat-icon:hover {
-  color: #5c258d;
+  
   transform: scale(1.1);
 }
 

@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DialgosucssComponent } from '../dialgosucss/dialgosucss.component';
 import { DialogmodifierComponent } from '../dialogmodifier/dialogmodifier.component';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-task-form',
   imports: [
@@ -25,7 +26,7 @@ import { DialogmodifierComponent } from '../dialogmodifier/dialogmodifier.compon
         MatInputModule,
         MatButtonModule,
         MatSelectModule,
-        MatCardModule,
+        MatCardModule,MatIcon,
         MatFormFieldModule,CommonModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css'
@@ -40,17 +41,17 @@ export class TaskFormComponent {
     private router: Router, private route: ActivatedRoute,public dialog: MatDialog) {
       this.taskForm = this.fb.group({
         title: ['', [Validators.required, Validators.minLength(3)]],
-        description: ['', Validators.required],
+        description: [''],
         status: ['À faire', Validators.required],
         priority: ['', Validators.required],
-        due_date: ['', Validators.required],
+        due_date: [''],
         estimated_time: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        category: ['', Validators.required],
-        assigned_to: ['', Validators.required],
+        category: [''],
+        assigned_to: [''],
         tags: [''],
         comments: [''],
-        start_date: ['', Validators.required],  // Nouveau champ
-        end_date: ['', Validators.required],    // Nouveau champ
+        start_date: [''],  
+        end_date: [''],   
       });
       
   }
@@ -101,24 +102,24 @@ export class TaskFormComponent {
       const taskData = this.taskForm.value;
   
       if (this.isEditMode && this.taskId) {
-        // Mise à jour de la tâche
+       
         this.taskService.updateTask(this.taskId, taskData).subscribe(
           (response) => {
             console.log('Tâche mise à jour avec succès!', response);
-            this.oeditDialog(); // Afficher la boîte de dialogue
-            this.router.navigate(['/list']); // Redirection vers la liste des tâches
+            this.oeditDialog(); 
+            this.router.navigate(['/list']); 
           },
           (error) => {
             console.error('Erreur lors de la mise à jour de la tâche:', error);
           }
         );
       } else {
-        // Création d'une nouvelle tâche
+       
         this.taskService.addTask(taskData).subscribe(
           (response) => {
             console.log('Tâche créée avec succès!', response);
-            this.openDialog(); // Afficher la boîte de dialogue
-            this.router.navigate(['/list']); // Redirection vers la liste des tâches
+            this.openDialog();
+            this.router.navigate(['/list']); 
           },
           (error) => {
             console.error('Erreur lors de la création de la tâche:', error);
@@ -136,7 +137,7 @@ export class TaskFormComponent {
         title: 'Ajout réussi',
         message: 'Votre tâche a été ajoutée avec succès !'
       },
-      width: '400px', // Vous pouvez ajuster la largeur selon vos besoins
+      width: '800px',
     });
   }
   oeditDialog(): void {
@@ -145,7 +146,8 @@ export class TaskFormComponent {
         title: 'modification  réussi',
         message: 'Votre tâche a été modifier avec succès !'
       },
-      width: '400px', // Vous pouvez ajuster la largeur selon vos besoins
+      
+      width: '800px', 
     });
   }
 }

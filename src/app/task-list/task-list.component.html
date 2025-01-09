@@ -1,5 +1,5 @@
-<h2>Liste des Tâches</h2>
-<div style="display: flex; ">
+
+<div style="display: flex; margin-top: 50PX;margin-bottom: 50PX; ">
   <input
     id="search"
     type="text"
@@ -24,6 +24,7 @@
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Colonne ID -->
+     
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>
         <mat-icon>info</mat-icon> ID

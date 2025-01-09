@@ -42,5 +42,8 @@ export class TaskService {
     const body = { priority };  // Envoyer uniquement la priorité mise à jour
     return this.http.patch(`${this.apiUrl}/${taskId}/priority`, body);
   }
-
+  deleteTasks(ids: number[]): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/delete-tasks`, { ids });
+  }
+  
 }

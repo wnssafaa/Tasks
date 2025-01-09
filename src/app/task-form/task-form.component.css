@@ -1,10 +1,12 @@
-/* Conteneur des lignes */
+
+  /* Conteneur des lignes */
 .form-row {
   display: flex;
-  gap: 10px; /* Espacement entre les champs */
- width: 80%;
+  gap: 40px; /* Espacement entre les champs */
+ width: 60%;
   margin-bottom: 16px;
-  align-items: center; /* Espacement entre les lignes */
+  align-items: center;
+  margin-left: 11%; /* Espacement entre les lignes */
 }
 
 /* Champs qui prennent la moitié de la largeur */
@@ -12,13 +14,16 @@ mat-form-field {
   flex: 0.5;
 }
 mat-form-field {
-  width: 80%;
+  width: 60%;
+
+ 
 }
 
 /* Alignement des boutons */
 .button-group {
   display: flex;
-  gap: 50%;
+  gap: 34%;
+  margin-left: 190PX;
  
 }
 
@@ -31,4 +36,27 @@ button[mat-raised-button] {
 }
 h1{
   margin-left: 30%;
+  margin-bottom: 50px;
+  
+}
+/* Conteneur des lignes */
+
+/* Champs de saisie - focus */
+mat-form-field.mat-focused .mat-form-field-label {
+  color: #1976d2;
+}
+
+
+/* Ajouter un effet visuel sur les champs de saisie au focus */
+mat-form-field input:focus,
+mat-form-field textarea:focus,
+mat-form-field mat-select:focus {
+  border-color: #1976d2;
+}
+
+/* Améliorer la visibilité des placeholders */
+mat-form-field input::placeholder,
+mat-form-field textarea::placeholder {
+  color: #757575;
+  
 }

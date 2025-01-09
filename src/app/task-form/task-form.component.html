@@ -4,11 +4,13 @@
   <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
     <!-- Ligne 1 : Titre et Statut -->
     <div class="form-row">
-      <mat-form-field appearance="outline" >
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>title</mat-icon> <!-- Icône Titre -->
         <mat-label>Titre</mat-label>
         <input matInput placeholder="Titre de la tâche" formControlName="title" />
       </mat-form-field>
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>check_circle</mat-icon> <!-- Icône Statut -->
         <mat-label>Statut</mat-label>
         <mat-select formControlName="status">
           <mat-option value="À faire">À faire</mat-option>
@@ -21,6 +23,7 @@
     <!-- Ligne 2 : Priorité et Date d'échéance -->
     <div class="form-row">
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>priority_high</mat-icon> <!-- Icône Priorité -->
         <mat-label>Priorité</mat-label>
         <mat-select formControlName="priority">
           <mat-option value="Haute">Haute</mat-option>
@@ -29,29 +32,35 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>calendar_today</mat-icon> <!-- Icône Date d'échéance -->
         <mat-label>Date d'échéance</mat-label>
         <input matInput type="date" formControlName="due_date" />
       </mat-form-field>
     </div>
-<!-- Ligne 6 : Date de début et Date de fin -->
-<div class="form-row">
-  <mat-form-field appearance="outline">
-    <mat-label>Date de début</mat-label>
-    <input matInput type="date" formControlName="start_date" />
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Date de fin</mat-label>
-    <input matInput type="date" formControlName="end_date" />
-  </mat-form-field>
-</div>
+
+    <!-- Ligne 6 : Date de début et Date de fin -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>schedule</mat-icon> <!-- Icône Date de début -->
+        <mat-label>Date de début</mat-label>
+        <input matInput type="date" formControlName="start_date" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>schedule</mat-icon> <!-- Icône Date de fin -->
+        <mat-label>Date de fin</mat-label>
+        <input matInput type="date" formControlName="end_date" />
+      </mat-form-field>
+    </div>
 
     <!-- Ligne 3 : Temps estimé et Catégorie -->
     <div class="form-row">
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>access_time</mat-icon> <!-- Icône Temps estimé -->
         <mat-label>Temps estimé (heures)</mat-label>
         <input matInput type="number" placeholder="Temps estimé" formControlName="estimated_time" />
       </mat-form-field>
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>category</mat-icon> <!-- Icône Catégorie -->
         <mat-label>Catégorie</mat-label>
         <mat-select formControlName="category">
           <mat-option value="Développement">Développement</mat-option>
@@ -61,36 +70,39 @@
           <mat-option value="Présentation">Présentation</mat-option>
         </mat-select>
       </mat-form-field>
-      
     </div>
 
     <!-- Ligne 4 : Assigné à et Tags -->
     <div class="form-row">
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>person</mat-icon> <!-- Icône Assigné à -->
         <mat-label>Assigné à</mat-label>
         <input matInput placeholder="Nom de la personne assignée" formControlName="assigned_to" />
       </mat-form-field>
       <mat-form-field appearance="outline">
+        <mat-icon matPrefix>label</mat-icon> <!-- Icône Tags -->
         <mat-label>Tags</mat-label>
         <input matInput placeholder="Tags, séparés par des virgules" formControlName="tags" />
       </mat-form-field>
     </div>
 
     <!-- Ligne 5 : Description -->
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="full-width" style=" margin-left: 11%;">
+      <mat-icon matPrefix>description</mat-icon> <!-- Icône Description -->
       <mat-label>Description</mat-label>
       <textarea matInput placeholder="Description de la tâche" formControlName="description"></textarea>
     </mat-form-field>
 
     <!-- Ligne 6 : Commentaires -->
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="full-width" style=" margin-left: 11%;">
+      <mat-icon matPrefix>comment</mat-icon> <!-- Icône Commentaires -->
       <mat-label>Commentaires</mat-label>
       <textarea matInput placeholder="Commentaires" formControlName="comments"></textarea>
     </mat-form-field>
 
     <!-- Boutons -->
     <div class="button-group">
-      <button mat-raised-button color="primary" [disabled]="taskForm.invalid" *ngIf="!isEditMode" >
+      <button mat-raised-button color="primary" [disabled]="taskForm.invalid" *ngIf="!isEditMode">
         Enregistrer
       </button>
       <button mat-raised-button color="primary" [disabled]="taskForm.invalid" *ngIf="isEditMode">
