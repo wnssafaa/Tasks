@@ -167,6 +167,13 @@ app.patch('/tasks/:id/priority', (req, res) => {
     }
   );
 });
+let tasks = [/* Exemple de tâches */];  // Liste des tâches (à remplacer par une base de données)
+
+app.post('/tasks/delete-tasks', (req, res) => {
+  const { ids } = req.body;
+  tasks = tasks.filter(task => !ids.includes(task.id));  // Filtrer les tâches à supprimer
+  res.status(200).json({ message: 'Tâches supprimées avec succès' });
+});
 // Lancer le serveur
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
