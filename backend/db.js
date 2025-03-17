@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-// Crée ou ouvre une base de données SQLite (task.db)
+// Crée ou ouvre une base de données SQLite (tasks.db)
 const db = new sqlite3.Database('./tasks.db', (err) => {
   if (err) {
     console.error('Erreur de connexion à la base de données SQLite:', err.message);
@@ -9,8 +9,9 @@ const db = new sqlite3.Database('./tasks.db', (err) => {
   }
 });
 
-// Créer la table 'tasks' si elle n'existe pas déjà
+// Créer les tables nécessaires
 db.serialize(() => {
+  // Table des tâches
   db.run(`
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,10 +27,21 @@ db.serialize(() => {
       assigned_to TEXT,
       tags TEXT,
       comments TEXT,
-       start_date DATETIME, -- Nouvelle colonne pour la date de début
-    end_date DATETIME    -- Nouvelle colonne pour la date de fin;
+      start_date DATETIME,
+      end_date DATETIME
+    )
+  `);
+
+  // Table des utilisateurs
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
 });
 
-module.exports = db; // Exporter la connexion pour l'utiliser dans 'server.js'
+module.exports = db; // Exporter la connexion pour l'utiliser dans server.js

@@ -1,13 +1,80 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db = require('./db'); // Importer la connexion à la base de données SQLite
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const db = require('./db'); // Connexion SQLite, assurez-vous que le fichier db.js existe
 
 const app = express();
 const PORT = 3000;
+const SECRET_KEY = 'votre_secret_key'; // Utilisez une clé sécurisée
 
 app.use(bodyParser.json());
 app.use(cors());
+
+// Middleware pour vérifier les jetons JWT
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Accès non autorisé. Jeton manquant.' });
+  }
+
+  const token = authHeader.split(' ')[1]; // Enlever "Bearer"
+  if (!token) {
+    return res.status(401).json({ error: 'Jeton invalide ou manquant.' });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Jeton invalide' });
+    }
+    req.user = user;
+    next();
+  });
+}
+
+// Inscription
+app.post('/auth/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    db.run(
+      `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
+      [username, email, hashedPassword],
+      function (err) {
+        if (err) {
+          return res.status(400).json({ error: `Erreur lors de l'inscription : ${err.message}` });
+        }
+        res.status(201).json({ message: 'Utilisateur enregistré avec succès.' });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur du serveur' });
+  }
+});
+
+// Connexion
+app.post('/auth/login', (req, res) => {
+  const { email, password } = req.body;
+
+  db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
+    if (err) {
+      return res.status(500).json({ error: 'Erreur du serveur' });
+    }
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Mot de passe incorrect' });
+    }
+
+    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).json({ message: 'Connexion réussie', token });
+  });
+});
 
 // Ajouter une tâche
 app.post('/tasks', (req, res) => {
